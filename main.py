@@ -1,9 +1,9 @@
 from fastapi_offline import FastAPIOffline as FastAPI
 from fastapi import Depends, status, Response, HTTPException
 from sqlalchemy.orm import Session
-from offline.models import UserModel, Base
-from offline.database import engine, get_db
-from offline.schemas import UserSchema, UpdateUserSchema, LoginUserSchema
+from app.models import UserModel, Base
+from app.database import engine, get_db
+from app.schemas import UserSchema, UserUpdateSchema, UserLoginSchema
 
 Base.metadata.create_all(bind=engine)
 
@@ -48,8 +48,8 @@ def get_user(id: int, response: Response, db: Session = Depends(get_db)):
 
 
 @app.put("/update_user/{id}", status_code=status.HTTP_202_ACCEPTED)
-def update_user(id: int, user: schemas.UpdateUser, db: Session = Depends(get_db)):
-    update_user = db.query(models.User).filter(models.User.id == id)
+def update_user(id: int, user: UserUpdateSchema, db: Session = Depends(get_db)):
+    update_user = db.query(UserModel).filter(UserModel.id == id)
     if not update_user.first():
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"User with id{id} not exists!")
     update_user.update(user)
@@ -59,7 +59,7 @@ def update_user(id: int, user: schemas.UpdateUser, db: Session = Depends(get_db)
 
 @app.delete("/delete_user", status_code=status.HTTP_204_NO_CONTENT)
 def delete_user(id: int, db: Session = Depends(get_db)):
-    user = db.query(models.User).filter(models.User.id == id)
+    user = db.query(UserModel).filter(UserModel.id == id)
     if not user.first():
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User with id {id} not Found!")
 
@@ -69,5 +69,5 @@ def delete_user(id: int, db: Session = Depends(get_db)):
 
 
 @app.post("/login_user")
-def login_user(user: schemas.LoginUser, db: Session = Depends(get_db)):
+def login_user(user: UserLoginSchema, db: Session = Depends(get_db)):
     return {"User": "Logged In"}

@@ -12,14 +12,14 @@ class UserSchema(BaseModel):
     is_admin: Optional[bool]
 
 
-class UpdateUserSchema(BaseModel):
+class UserUpdateSchema(BaseModel):
     fname: Optional[str]
     lname: Optional[str]
     password: Optional[str]
     age: Optional[int]
 
 
-class LoginUserSchema(BaseModel):
+class UserLoginSchema(BaseModel):
     username: str
     password: str
 
