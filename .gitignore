@@ -1,5 +1,7 @@
-test.db
+__pycache__
 venv
 .env
-__pycache__
 .idea
+.vscode
+
+test.db
