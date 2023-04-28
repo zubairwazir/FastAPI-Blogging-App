@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Optional
+from typing import Optional, List
 
 
 class UserSchema(BaseModel):
@@ -24,20 +24,14 @@ class UserLoginSchema(BaseModel):
     password: str
 
 
-class UserResponseSchema(BaseModel):
-    fname: Optional[str]
-    lname: Optional[str]
-    email: Optional[str]
-    age: Optional[int]
-
-    class Config:
-        orm_mode = True
-
-
 class BlogSchema(BaseModel):
-    id: int
     title: str
     description: str
+
+
+class GetBlogsSchema(BlogSchema):
+    class Config:
+        orm_mode = True
 
 
 class BlogUpdateSchema(BaseModel):
@@ -45,6 +39,21 @@ class BlogUpdateSchema(BaseModel):
     description: Optional[str]
 
 
+class UserResponseSchema(BaseModel):
+    fname: Optional[str]
+    lname: Optional[str]
+    email: Optional[str]
+    age: Optional[int]
+    blogs: List[GetBlogsSchema] = []
+
+    class Config:
+        orm_mode = True
+
+
 class BlogResponseSchema(BaseModel):
-    title: str
-    description: str
+    title: Optional[str]
+    description: Optional[str]
+    author: UserResponseSchema = None
+
+    class Config:
+        orm_mode = True
