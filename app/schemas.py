@@ -8,8 +8,8 @@ class UserSchema(BaseModel):
     email: str
     password: str
     age: int
-    is_active: Optional[bool]
-    is_admin: Optional[bool]
+    is_active: Optional[bool] = False
+    is_admin: Optional[bool] = False
 
 
 class UserUpdateSchema(BaseModel):
@@ -24,4 +24,27 @@ class UserLoginSchema(BaseModel):
     password: str
 
 
-class UserR
+class UserResponseSchema(BaseModel):
+    fname: Optional[str]
+    lname: Optional[str]
+    email: Optional[str]
+    age: Optional[int]
+
+    class Config:
+        orm_mode = True
+
+
+class BlogSchema(BaseModel):
+    id: int
+    title: str
+    description: str
+
+
+class BlogUpdateSchema(BaseModel):
+    title: Optional[str]
+    description: Optional[str]
+
+
+class BlogResponseSchema(BaseModel):
+    title: str
+    description: str
