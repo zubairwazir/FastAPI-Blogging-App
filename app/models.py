@@ -16,3 +16,12 @@ class UserModel(Base):
 
     def __repr__(self):
         return f"<User {self.email}"
+
+
+class BlogModel(Base):
+    __tablename__ = 'blogs'
+
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String)
+    description = Column(String)
+
