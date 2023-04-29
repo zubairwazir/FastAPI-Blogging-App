@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends, status, HTTPException
+from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from app.config.database import get_db
 from app.config.hashing import HashPassword
@@ -12,7 +13,7 @@ router = APIRouter(
 
 
 @router.post('/login')
-def login(user: UserLoginSchema, db: Session = Depends(get_db)):
+def login(user: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     get_user = db.query(UserModel).filter(UserModel.email == user.username).first()
 
     if not get_user:
