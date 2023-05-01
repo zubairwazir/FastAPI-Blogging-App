@@ -1,4 +1,4 @@
-from fastapi_offline import FastAPIOffline as FastAPI
+from fastapi import FastAPI
 from app.config.database import engine
 from app.models.models import Base
 from app.routers import user, blog, auth
